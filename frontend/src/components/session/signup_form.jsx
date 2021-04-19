@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import "./session_forms.scss"
 
 class SignupForm extends React.Component {
   constructor(props) {
@@ -56,7 +57,8 @@ class SignupForm extends React.Component {
 
   render() {
     return (
-      <div className="signup-form-container">
+      <div className="session-form">
+        <h2>Sign up</h2>
         <form onSubmit={this.handleSubmit}>
           <div className="signup-form">
             <br />

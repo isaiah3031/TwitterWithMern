@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import { logoutUser } from '../../actions/session_actions';
-// import './navbar.css'
+import './navbar.scss'
 
 const NavBar = ({ logout, loggedIn }) => {
   const logoutUser = (e) => {
@@ -30,7 +30,7 @@ const NavBar = ({ logout, loggedIn }) => {
   }
 
   return (
-    <div>
+    <div className='navbar'>
       <h1>Chirper</h1>
       { getLinks()}
     </div>
