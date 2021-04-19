@@ -78,7 +78,7 @@ router.post('/',
 
     const newTweet = new Tweet({
       text: req.body.text,
-      user: req.user.id
+      user: { id: req.user.id, handle: req.user.handle }
     })
 
     newTweet.save().then(tweet => res.json(tweet))

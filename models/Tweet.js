@@ -3,8 +3,13 @@ const Schema = mongoose.Schema;
 
 const TweetSchema = new Schema({
   user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users'
+    id: {
+      type: Schema.Types.ObjectId,
+      ref: 'users'
+    },
+    handle: {
+      type: String
+    }
   },
   text: {
     type: String,
@@ -14,7 +19,16 @@ const TweetSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  likedBy: [{ type: mongoose.Schema.ObjectId, ref: 'User', handle: String }]
+  likedBy: [{
+    id: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User', handle: String
+    },
+    handle: {
+      type: String,
+      required: true
+    }
+  }]
 })
 
 module.exports = Tweet = mongoose.model('tweet', TweetSchema);
