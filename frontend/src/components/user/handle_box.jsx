@@ -10,7 +10,7 @@ const HandleBox = ({ id, fetchUser, users }) => {
   }, [])
 
   return (
-    <p>{handle}</p>
+    <p className='tweetbox__handle'>{handle}</p>
   )
 }
 

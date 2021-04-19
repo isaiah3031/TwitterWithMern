@@ -1,30 +1,29 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
+import "./tweet_compose.scss";
 
 const TweetCompose = ({ composeTweet }) => {
-  const [text, setText] = useState('')
+  const [text, setText] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     let tweet = {
-      "text": text
+      text: text,
     };
-    composeTweet(tweet).then(() => setText(''));
-  }
+    composeTweet(tweet).then(() => setText(""));
+  };
 
   return (
-    <div>
-      <form className='tweet_compose' onSubmit={(e) => handleSubmit(e)}>
-        <div>
-          <input type="textarea"
-            value={text}
-            onChange={e => setText(e.target.value)}
-            placeholder="Write your tweet..."
-          />
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    </div>
-  )
-}
+    <form className="tweetcompose" onSubmit={(e) => handleSubmit(e)}>
+      <div>
+        <textarea
+          rows="5"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Write your tweet..."
+        ></textarea>
+        <input type="submit" value="Submit" />
+      </div>
+    </form>
+  );
+};
 
 export default TweetCompose;

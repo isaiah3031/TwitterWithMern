@@ -1,0 +1,11 @@
+.tweetbox {
+  border: solid thin black;
+
+  padding: 0 10px;
+  .tweetbox__handle {
+    font-weight: 600;
+  }
+  .tweetbox__body {
+    text-align: left;
+  }
+}

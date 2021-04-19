@@ -1,0 +1,11 @@
+.tweetcompose {
+  border: solid thin black;
+  padding: 10px 0;
+  textarea {
+    outline: none;
+    resize: none;
+    border: none;
+    width: 90%;
+    vertical-align: top;
+  }
+}
