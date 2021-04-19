@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 // Return all tweets by a certain user
 // api/tweets/user/:user_id
 router.get('/user/:user_id', (req, res) => {
-  Tweet.find({ user: req.params.user_id })
+  Tweet.find({ 'user.id': req.params.user_id })
     .then(tweets => {
       return res.json(tweets)
     })

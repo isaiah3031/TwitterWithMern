@@ -8,7 +8,7 @@ const TweetBox = ({ tweet }) => {
 
   return (
     <div className='tweetbox'>
-      <p className='tweetbox__handle'>{user}</p>
+      <p className='tweetbox__handle'>{user.handle}</p>
       <p className='tweetbox__body'>{text}</p>
       <LikedListContainer tweetId={_id} likedBy={likedBy} />
     </div>

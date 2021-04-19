@@ -6,7 +6,7 @@ const Profile = ({ fetchUserTweets, tweets, currentUser }) => {
   useEffect(() => {
     fetchUserTweets(currentUser.id)
   }, [])
-
+  
   if (tweets.length === 0) {
     return (<div>This user has no Tweets</div>)
   } else {
