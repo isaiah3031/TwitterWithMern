@@ -32,32 +32,32 @@ export const receiveLike = tweet => ({
 })
 
 export const composeTweet = tweet => dispatch =>
-  TweetAPIUtil.writeTweet(tweet).then(() => (
+  TweetAPIUtil.writeTweet(tweet).then((tweet) => (
     dispatch(receiveNewTweet(tweet))
   )).catch(err => console.log(err))
 
-export const fetchTweets = () => dispatch => 
+export const fetchTweets = () => dispatch =>
   TweetAPIUtil.getTweets().then(tweets =>
     dispatch(receiveTweets(tweets))
   ).catch(err => console.log(err))
 
 
-export const fetchTweet = id => dispatch => 
+export const fetchTweet = id => dispatch =>
   TweetAPIUtil.getTweet(id).then(tweet =>
     dispatch(receiveTweet(tweet)).catch(err => console.log(err)))
 
 
-export const fetchUserTweets = id => dispatch => 
+export const fetchUserTweets = id => dispatch =>
   TweetAPIUtil.getUserTweets(id).then(tweets =>
     dispatch(receiveUserTweets(tweets))
   ).catch(err => console.log(err))
 
 
-export const likeTweet = (tweetId, userId) => dispatch => 
+export const likeTweet = (tweetId, userId) => dispatch =>
   TweetAPIUtil.likeTweet(tweetId, userId)
     .then(tweet => dispatch(receiveLike(tweet)))
 
 
-export const unlikeTweet = (tweetId, userId) => dispatch => 
+export const unlikeTweet = (tweetId, userId) => dispatch =>
   TweetAPIUtil.unlikeTweet(tweetId, userId)
     .then(tweet => dispatch(receiveLike(tweet)))

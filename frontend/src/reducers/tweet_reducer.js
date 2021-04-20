@@ -21,7 +21,8 @@ const TweetsReducer = (state = { all: {}, user: {}, new: undefined }, action) =>
       newState.all[action.tweet._id] = action.tweet
       return newState
     case RECEIVE_NEW_TWEET:
-      newState.new[action.tweets.data._id] = action.tweets.data
+      newState.new = action.tweet.data
+      newState.all[action.tweet.data._id] = action.tweet.data
       return newState;
     case RECEIVE_LIKE:
       if (newState.user[action.tweet.data._id]) {
