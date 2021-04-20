@@ -44,7 +44,7 @@ router.patch('/:tweet_id/like',
   (req, res) => {
     Tweet.findById(req.params.tweet_id)
       .then(tweet => {
-        tweet.likedBy.push(Object.keys(req.body)[0])
+        tweet.likedBy.push({ id: req.user._doc.id, handle: req.user._doc.handle })
         tweet.save()
         res.json(tweet)
       })
@@ -58,7 +58,7 @@ router.patch('/:tweet_id/unlike',
   (req, res) => {
     Tweet.findById(req.params.tweet_id)
       .then(tweet => {
-        tweet.likedBy = tweet.likedBy.filter(id => id != Object.keys(req.body)[0])
+        tweet.likedBy = tweet.likedBy.filter(user => user._id === req.user._doc.id)
         tweet.save()
         res.json(tweet)
       })

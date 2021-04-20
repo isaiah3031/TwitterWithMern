@@ -1,6 +1,5 @@
 import React from 'react';
-import LikedListContainer from './liked_list_container'
-import HandleBoxContainer from '../user/handle_box_container'
+import Likes from '../likes/likes'
 import './tweet_box.scss'
 
 const TweetBox = ({ tweet }) => {
@@ -10,7 +9,7 @@ const TweetBox = ({ tweet }) => {
     <div className='tweetbox'>
       <p className='tweetbox__handle'>{user.handle}</p>
       <p className='tweetbox__body'>{text}</p>
-      <LikedListContainer tweetId={_id} likedBy={likedBy} />
+      <Likes tweetId={_id} likedBy={likedBy} />
     </div>
   )
 }

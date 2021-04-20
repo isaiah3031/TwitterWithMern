@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
-import TweetBox from './tweet_box';
-import TweetComposeContainer from './tweet_compose_container'
-import './tweets.scss'
+import TweetBox from '../tweets/tweet_box';
+import TweetComposeContainer from '../tweets/tweet_compose_container'
+import '../tweets/tweets.scss'
 
-const Tweets = ({ tweetList, fetchTweets }) => {
+const Feed = ({ tweetList, fetchTweets }) => {
   useEffect(() => {
     fetchTweets()
   }, [])
 
-  if (tweetList.length === 0) return (<div>There are no tweets</div>)
+  if (tweetList.length === 0) {
+    return (
+      <div>There are no tweets</div>
+    )
+  }
 
   return (
     <div className='tweets'>
@@ -26,4 +30,4 @@ const Tweets = ({ tweetList, fetchTweets }) => {
   )
 }
 
-export default Tweets;
+export default Feed;
