@@ -1,5 +1,14 @@
-const mongoose = require('mongoose');
+import mongoose, {Model, Document} from 'mongoose'
 const Schema = mongoose.Schema;
+import { ITweet } from './Tweet'
+
+export interface IUser extends Document {
+  _id: String,
+  handle: String,
+  email: String,
+  password: String,
+  likedTweets: Array<ITweet['_id']>
+}
 
 const UserSchema = new Schema({
   handle: {
@@ -14,9 +23,9 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  likedTweets: [{ type: mongoose.Schema.ObjectId, ref: 'Tweet' }]
+  likedTweets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tweet' }]
 }, {
   timestamps: true
 })
 
-module.exports = User = mongoose.model('User', UserSchema)
+export default mongoose.model<IUser>('User', UserSchema)

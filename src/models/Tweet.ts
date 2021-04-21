@@ -1,17 +1,27 @@
-const mongoose = require('mongoose')
+import mongoose, {Model, Document} from 'mongoose'
 const Schema = mongoose.Schema;
+import { IUser } from './User'
 
 export interface ITweet extends Document {
+  _id: String,
   user: {
-    id: Integer,
-    handle: IUser['_id']
-  }
+    id: IUser['_id'],
+    handle: String
+  },
+  text: String,
+  date: Date,
+  likedBy: [
+    {
+      id: IUser['_id'],
+      handle: String
+    }
+  ]
 }
 
 const TweetSchema = new Schema({
   user: {
     id: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'users'
     },
     handle: {
@@ -28,7 +38,7 @@ const TweetSchema = new Schema({
   },
   likedBy: [{
     id: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User', handle: String
     },
     handle: {
@@ -38,4 +48,4 @@ const TweetSchema = new Schema({
   }]
 })
 
-module.exports = Tweet = mongoose.model('tweet', TweetSchema);
+export default mongoose.model<ITweet>('Tweet', TweetSchema)

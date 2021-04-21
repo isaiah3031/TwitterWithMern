@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express'
 const router = express.Router()
 import mongoose from 'mongoose'
 import passport from 'passport'
-import Tweet from '../../models/Tweet'
+import Tweet, { ITweet } from '../../models/Tweet'
 import validateTweetInput from '../../validation/tweets'
 
 // Return all tweets
@@ -40,14 +40,13 @@ router.get('/:id', (req: Request, res: Response) => {
 // api/tweet/:tweetId/like
 router.patch('/:tweet_id/like',
   passport.authenticate('jwt', { session: false }),
-  (req: Request, res: Response) => {
-    Tweet.findById(req.params.tweet_id)
-      .then(tweet => {
-        tweet.likedBy.push({ id: req.user._doc.id, handle: req.user._doc.handle })
-        tweet.save()
-        res.json(tweet)
-      })
-      .catch(err => res.status(404).json({ failedToLike: 'Failed to like tweet' }))
+  async (req: Request, res: Response) => {
+    let tweet = await Tweet.findById(req.params.tweet_id).lean<ITweet>()
+    tweet.likedBy.push({ id: req.user._id, handle: req.user._doc.handle })
+    tweet.save()
+    res.json(tweet)
+
+    // .catch(err => res.status(404).json({ failedToLike: 'Failed to like tweet' }))
   })
 
 // Unlike a tweet
