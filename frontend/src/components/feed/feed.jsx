@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import TweetBox from '../tweets/tweet_box';
 import TweetComposeContainer from '../tweets/tweet_compose_container'
-import '../tweets/tweets.scss'
+import '../tweet_feed.scss'
 
 const Feed = ({ tweetList, fetchTweets }) => {
   useEffect(() => {

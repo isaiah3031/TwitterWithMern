@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import TweetBox from '../tweets/tweet_box';
-import '../tweets/tweets.scss'
+import '../tweet_feed.scss'
 
 const Profile = ({ fetchUserTweets, tweets, currentUser }) => {
   useEffect(() => {
     fetchUserTweets(currentUser.id)
   }, [])
-  
+
   if (tweets.length === 0) {
     return (<div>This user has no Tweets</div>)
   } else {
