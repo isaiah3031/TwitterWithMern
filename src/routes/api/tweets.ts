@@ -3,6 +3,7 @@ const router = express.Router()
 import mongoose from 'mongoose'
 import passport from 'passport'
 import Tweet, { ITweet } from '../../models/Tweet'
+import { IGetUserAuthInfoRequest } from '../../models/User'
 import validateTweetInput from '../../validation/tweets'
 
 // Return all tweets
@@ -40,11 +41,15 @@ router.get('/:id', (req: Request, res: Response) => {
 // api/tweet/:tweetId/like
 router.patch('/:tweet_id/like',
   passport.authenticate('jwt', { session: false }),
-  async (req: Request, res: Response) => {
-    let tweet = await Tweet.findById(req.params.tweet_id).lean<ITweet>()
-    tweet.likedBy.push({ id: req.user._id, handle: req.user._doc.handle })
-    tweet.save()
-    res.json(tweet)
+  async (req: IGetUserAuthInfoRequest, res: Response) => {
+    Tweet.findByIdAndUpdate(req.params.tweet_id, req.body, (err: any, tweet: any) => {
+      const modifiedLikedBy = tweet.likedBy;
+      const { id, handle } = req.user
+      modifiedLikedBy.push({ "id": id, "handle": handle })
+      tweet.replaceOne({ likedBy: modifiedLikedBy })
+      tweet.save()
+      res.json(tweet)
+    })
 
     // .catch(err => res.status(404).json({ failedToLike: 'Failed to like tweet' }))
   })
@@ -53,21 +58,23 @@ router.patch('/:tweet_id/like',
 // api/tweet/:tweetId/unlike
 router.patch('/:tweet_id/unlike',
   passport.authenticate('jwt', { session: false }),
-  (req: Request, res: Response) => {
-    Tweet.findById(req.params.tweet_id)
-      .then(tweet => {
-        tweet.likedBy = tweet.likedBy.filter(user => user._id === req.user._doc.id)
-        tweet.save()
-        res.json(tweet)
-      })
-      .catch(err => res.status(404).json({ failedToUnlike: 'Failed to unlike tweet' }))
+  (req: IGetUserAuthInfoRequest, res: Response) => {
+    Tweet.findByIdAndUpdate(req.params.tweet_id, req.body, (err: any, tweet: any) => {
+      const modifiedLikedBy = tweet.likedBy;
+      const { id, handle } = req.user
+      modifiedLikedBy.filter({ "id": id })
+      tweet.replaceOne({ likedBy: modifiedLikedBy })
+      tweet.save()
+      res.json(tweet)
+    })
+    // .catch(err => res.status(404).json({ failedToUnlike: 'Failed to unlike tweet' }))
   })
 
 // Post a tweet
 // api/tweet/
 router.post('/',
   passport.authenticate('jwt', { session: false }),
-  (req: Request, res: Response) => {
+  (req: IGetUserAuthInfoRequest, res: Response) => {
     const { errors, isValid } = validateTweetInput(req.body);
 
     if (!isValid) {
@@ -83,4 +90,4 @@ router.post('/',
   }
 )
 
-module.exports = router;
+export default router;

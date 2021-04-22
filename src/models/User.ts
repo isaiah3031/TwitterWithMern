@@ -1,6 +1,13 @@
-import mongoose, {Model, Document} from 'mongoose'
-const Schema = mongoose.Schema;
+import mongoose, { Model, Document, Schema } from 'mongoose'
+import { Request } from 'express'
 import { ITweet } from './Tweet'
+
+export interface IGetUserAuthInfoRequest extends Request {
+  user: {
+    id: string,
+    handle: string
+  }
+}
 
 export interface IUser extends Document {
   _id: String,
@@ -23,7 +30,7 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  likedTweets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tweet' }]
+  likedTweets: [{ type: Schema.Types.ObjectId, ref: 'Tweet' }]
 }, {
   timestamps: true
 })

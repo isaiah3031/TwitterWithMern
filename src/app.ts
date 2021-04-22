@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import passport from 'passport'
 import express from 'express'
-const app = express();
+const app: express.Application = express();
 import configKeys from './config/keys'
 const db = configKeys.mongoURI
 import users from './routes/api/users'

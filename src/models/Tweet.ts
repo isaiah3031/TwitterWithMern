@@ -1,4 +1,4 @@
-import mongoose, {Model, Document} from 'mongoose'
+import mongoose, { Model, Document } from 'mongoose'
 const Schema = mongoose.Schema;
 import { IUser } from './User'
 
