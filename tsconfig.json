@@ -6,7 +6,8 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "lib": [
-      "esnext"
+      "esnext",
+      "DOM"
     ],
     "module": "commonjs",
     "target": "esnext",
@@ -29,5 +30,8 @@
   ],
   "exclude": [
     "node_modules"
+  ],
+  "types" : [
+    "expect-webdriverio"
   ]
 }

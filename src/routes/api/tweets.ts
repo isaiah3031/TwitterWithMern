@@ -42,15 +42,21 @@ router.get('/:id', (req: Request, res: Response) => {
 router.patch('/:tweet_id/like',
   passport.authenticate('jwt', { session: false }),
   async (req: IGetUserAuthInfoRequest, res: Response) => {
-    Tweet.findByIdAndUpdate(req.params.tweet_id, req.body, (err: any, tweet: any) => {
-      const modifiedLikedBy = tweet.likedBy;
-      const { id, handle } = req.user
-      modifiedLikedBy.push({ "id": id, "handle": handle })
-      tweet.replaceOne({ likedBy: modifiedLikedBy })
-      tweet.save()
-      res.json(tweet)
-    })
-
+    const tweet = await Tweet.findById(req.params.tweet_id)
+    if (tweet) {
+      try {
+        const modifiedLikedBy = tweet.likedBy;
+        const { id, handle } = req.user
+        modifiedLikedBy.push({ "id": id, "handle": handle })
+        tweet.likedBy = modifiedLikedBy
+        tweet.save()
+        res.json(tweet)
+      } catch (error) {
+        res.status(404).json({ failedToLike: 'Failed to like tweet' })
+      }
+    } else {
+      res.status(404).json({ failedToFind: 'Failed to find tweet' })
+    }
     // .catch(err => res.status(404).json({ failedToLike: 'Failed to like tweet' }))
   })
 

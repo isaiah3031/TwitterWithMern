@@ -5,16 +5,21 @@ import { ITweet } from './Tweet'
 export interface IGetUserAuthInfoRequest extends Request {
   user: {
     id: string,
-    handle: string
+    handle: string,
+    email: string
   }
 }
 
 export interface IUser extends Document {
-  _id: String,
-  handle: String,
-  email: String,
-  password: String,
-  likedTweets: Array<ITweet['_id']>
+  handle?: string,
+  email?: string,
+  password?: string,
+  likedTweets?: Array<ITweet['_id']>
+}
+
+export interface InputUser {
+  email?: IUser['email'],
+  password?: IUser['password']
 }
 
 const UserSchema = new Schema({
